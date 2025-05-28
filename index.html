@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Portfolio - Tech Vision</title>
+    <style>
+        :root {
+            --primary-color: #D32F2F; /* Strong Red */
+            --secondary-color: #1A1A1A; /* Dark Background */
+            --accent-color: #FF4081; /* Brighter Red/Pink for highlights */
+            --text-color: #E0E0E0; /* Light Gray for text */
+            --card-bg-color: #2C2C2C; /* Darker Card Background */
+            --border-color: #444;
+            --hover-color: #E57373; /* Lighter Red for hover */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #111;
+            padding: 15px 0;
+            border-bottom: 2px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--text-color);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1200x400.png?text=Market+Analysis+Banner') no-repeat center center/cover; /* Placeholder */
+            color: #fff;
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .hero h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto 20px auto;
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-size: 1.1em;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.2em;
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(211, 47, 47, 0.4);
+        }
+
+        .card h3 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .card .meta {
+            font-size: 0.9em;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .card .meta span {
+            margin-right: 15px;
+        }
+        
+        .card .meta i { /* For icons */
+            margin-right: 5px;
+        }
+
+        .card p {
+            font-size: 1em;
+            color: var(--text-color);
+            flex-grow: 1;
+        }
+        
+        .card .chart-placeholder {
+            width: 100%;
+            height: 150px;
+            background-color: #333;
+            border: 1px dashed #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 0.9em;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+        
+        .card .chart-placeholder svg { /* Basic SVG chart example */
+            width: 80%;
+            height: 80%;
+        }
+
+        .card a.read-more {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            align-self: flex-start;
+        }
+
+        .card a.read-more:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #111;
+            color: #888;
+            margin-top: 50px;
+            border-top: 2px solid var(--primary-color);
+        }
+        
+        /* Basic responsive adjustments */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav ul {
+                margin-top: 10px;
+                flex-direction: column;
+                width: 100%;
+            }
+            nav ul li {
+                margin-left: 0;
+                margin-bottom: 5px;
+                width: 100%;
+            }
+            nav ul li a {
+                display: block;
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 2em;
+            }
+            .hero p {
+                font-size: 1em;
+            }
+        }
+
+    </style>
+    <!-- Font Awesome for icons (optional, but good for tech feel) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#updates" class="logo">TECH<span>VEST</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#updates" class="active" onclick="showPage('updates')">Updates</a></li>
+                    <li><a href="#portfolio" onclick="showPage('portfolio')">Portfolio</a></li>
+                    <li><a href="#research" onclick="showPage('research')">Research</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="page-content">
+        <!-- Content will be loaded here by JavaScript -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="currentYear"></span> TechVest Portfolio. All Rights Reserved. For informational purposes only.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        function showPage(pageId) {
+            const pageContent = document.getElementById('page-content');
+            const navLinks = document.querySelectorAll('nav ul li a');
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${pageId}`) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Simple routing based on pageId
+            if (pageId === 'updates') {
+                pageContent.innerHTML = `
+                    <section id="updates" class="container">
+                        <div class="hero">
+                            <h1>Market Pulse & Trade Intel</h1>
+                            <p>Your source for cutting-edge trade ideas, market analysis, and strategic insights. Stay ahead of the curve.</p>
+                            <a href="#latest-posts" class="cta-button">Explore Latest Updates</a>
+                        </div>
+                        <h2 class="page-title" id="latest-posts">Latest Trade Ideas & Updates</h2>
+                        <div class="content-grid">
+                            <div class="card">
+                                <h3>Quantum Computing Stocks: The Next Frontier?</h3>
+                                <div class="meta">
+                                    <span><i class="fas fa-calendar-alt"></i> May 28, 2025</span>
+                                    <span><i class="fas fa-tags"></i> Equities, Tech</span>
+                                </div>
+                                <p>An in-depth analysis of emerging quantum computing companies and their potential market impact. We explore the technology, key players, and investment risks and rewards.</p>
+                                <div class="chart-placeholder">
+                                    <svg viewBox="0 0 100 50">
+                                        <polyline fill="none" stroke="${getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim()}" stroke-width="2" points="0,45 10,30 20,35 30,20 40,25 50,10 60,15 70,5 80,10 90,20 100,25" />
+                                    </svg>
+                                </div>
+                                <a href="#" class="read-more">Read Full Analysis <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="card">
+                                <h3>AI in Supply Chains: Efficiency Gains & Investment Opportunities</h3>
+                                <div class="meta">
+                                    <span><i class="fas fa-calendar-alt"></i> May 26, 2025</span>
+                                    <span><i class="fas fa-tags"></i> AI, Logistics, Growth</span>
+                                </div>
+                                <p>How artificial intelligence is revolutionizing supply chain management. Identifying companies leading this transformation and the outlook for this sector.</p>
+                                 <div class="chart-placeholder">
+                                    <svg viewBox="0 0 100 50" >
+                                        <rect x="5" y="30" width="10" height="15" fill="${getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim()}"><title>Q1</title></rect>
+                                        <rect x="20" y="20" width="10" height="25" fill="${getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim()}"><title>Q2</title></rect>
+                                        <rect x="35" y="10" width="10" height="35" fill="${getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim()}"><title>Q3</title></rect>
+                                        <rect x="50" y="25" width="10" height="20" fill="${getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim()}"><title>Q4</title></rect>
+                                    </svg>
+                                </div>
+                                <a href="#" class="read-more">Read Full Analysis <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="card">
+                                <h3>Macro View: Inflationary Pressures and Fed Policy Outlook</h3>
+                                <div class="meta">
+                                    <span><i class="fas fa-calendar-alt"></i> May 24, 2025</span>
+                                    <span><i class="fas fa-tags"></i> Macro, Economy</span>
+                                </div>
+                                <p>Examining current inflation trends and their potential impact on Federal Reserve policy. What this means for various asset classes in the coming months.</p>
+                                <div class="chart-placeholder"><span>Inflation Rate vs. Fed Funds Rate (Placeholder)</span></div>
+                                <a href="#" class="read-more">Read Full Analysis <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                             <div class="card">
+                                <h3>Breakout Alert: Undervalued Small-Cap Tech Gem</h3>
+                                <div class="meta">
+                                    <span><i class="fas fa-calendar-alt"></i> May 22, 2025</span>
+                                    <span><i class="fas fa-tags"></i> Small-Cap, Tech, Value</span>
+                                </div>
+                                <p>Deep dive into a promising small-cap technology firm showing strong fundamentals and potential for significant upside. Technical and fundamental analysis included.</p>
+                                <div class="chart-placeholder">
+                                    <svg viewBox="0 0 100 50">
+                                        <path d="M 0 40 C 10 10, 30 10, 40 40 S 70 70, 80 40" stroke="${getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim()}" fill="transparent" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <a href="#" class="read-more">Read Full Analysis <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            } else if (pageId === 'portfolio') {
+                pageContent.innerHTML = `
+                    <section id="portfolio" class="container">
+                        <h2 class="page-title">Active Portfolio & Performance</h2>
+                        <div class="content-grid">
+                            <div class="card" style="grid-column: 1 / -1;"> <!-- Full width card -->
+                                <h3>Portfolio Overview</h3>
+                                <p>Current allocation: 60% Equities, 30% Fixed Income, 10% Alternatives. YTD Return: +8.5%.</p>
+                                <div class="chart-placeholder" style="height: 250px;">
+                                    Portfolio Allocation Pie Chart (Placeholder)
+                                    <svg viewBox="0 0 36 36" class="chart-placeholder-svg" style="display: block; margin: 10px auto; max-width: 150px;">
+                                      <path class="circle-bg"
+                                        d="M18 2.0845
+                                          a 15.9155 15.9155 0 0 1 0 31.831
+                                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        fill="none" stroke="#444" stroke-width="3.8"/>
+                                      <path class="circle"
+                                        stroke="${getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim()}" stroke-width="3.8" stroke-dasharray="60, 100"
+                                        d="M18 2.0845
+                                          a 15.9155 15.9155 0 0 1 0 31.831
+                                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        fill="none"/>
+                                       <path class="circle"
+                                        stroke="${getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim()}" stroke-width="3.8" stroke-dasharray="30, 100" stroke-dashoffset="-60"
+                                        d="M18 2.0845
+                                          a 15.9155 15.9155 0 0 1 0 31.831
+                                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        fill="none"/>
+                                      <text x="18" y="20.35" class="percentage" style="fill: var(--text-color); font-size: 0.5em; text-anchor: middle;">60% Equities</text>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="color: var(--primary-color); margin-top: 30px; text-align:center;">Active Trade Ideas</h3>
+                        <div style="overflow-x: auto; background-color: var(--card-bg-color); padding: 15px; border-radius: 8px; margin-top:15px; border: 1px solid var(--border-color);">
+                            <table style="width: 100%; border-collapse: collapse; ">
+                                <thead style="background-color: var(--primary-color); color: #fff;">
+                                    <tr>
+                                        <th style="padding: 12px; text-align: left;">Asset</th>
+                                        <th style="padding: 12px; text-align: left;">Ticker</th>
+                                        <th style="padding: 12px; text-align: left;">Position</th>
+                                        <th style="padding: 12px; text-align: right;">Entry Price</th>
+                                        <th style="padding: 12px; text-align: right;">Current Price</th>
+                                        <th style="padding: 12px; text-align: right;">P/L</th>
+                                        <th style="padding: 12px; text-align: center;">Conviction (1-5)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px;">Stark Industries</td>
+                                        <td style="padding: 10px;">STRK</td>
+                                        <td style="padding: 10px;">LONG</td>
+                                        <td style="padding: 10px; text-align: right;">$250.75</td>
+                                        <td style="padding: 10px; text-align: right;">$280.10</td>
+                                        <td style="padding: 10px; text-align: right; color: #4CAF50;">+11.71%</td>
+                                        <td style="padding: 10px; text-align: center; color: var(--accent-color); font-weight: bold;">5 <i class="fas fa-arrow-up"></i></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px;">Cyberdyne Systems</td>
+                                        <td style="padding: 10px;">CYBD</td>
+                                        <td style="padding: 10px;">LONG</td>
+                                        <td style="padding: 10px; text-align: right;">$102.50</td>
+                                        <td style="padding: 10px; text-align: right;">$115.20</td>
+                                        <td style="padding: 10px; text-align: right; color: #4CAF50;">+12.39%</td>
+                                        <td style="padding: 10px; text-align: center; color: var(--accent-color); font-weight: bold;">4 <i class="fas fa-arrow-up"></i></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px;">Weyland-Yutani Corp</td>
+                                        <td style="padding: 10px;">WYCN</td>
+                                        <td style="padding: 10px;">SHORT</td>
+                                        <td style="padding: 10px; text-align: right;">$75.00</td>
+                                        <td style="padding: 10px; text-align: right;">$70.30</td>
+                                        <td style="padding: 10px; text-align: right; color: #4CAF50;">+6.27%</td>
+                                        <td style="padding: 10px; text-align: center; color: var(--accent-color); font-weight: bold;">3 <i class="fas fa-arrow-down"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px;">FutureTech Inc.</td>
+                                        <td style="padding: 10px;">FTRT</td>
+                                        <td style="padding: 10px;">LONG</td>
+                                        <td style="padding: 10px; text-align: right;">$45.20</td>
+                                        <td style="padding: 10px; text-align: right;">$43.80</td>
+                                        <td style="padding: 10px; text-align: right; color: #F44336;">-3.10%</td>
+                                        <td style="padding: 10px; text-align: center; color: var(--accent-color); font-weight: bold;">4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                         <div class="card" style="margin-top: 30px;">
+                            <h3>Trade Journal Link</h3>
+                            <p>For detailed trade rationales, entry/exit points, and ongoing commentary, please visit the comprehensive Trade Journal.</p>
+                            <a href="#" class="cta-button" style="align-self: flex-start; margin-top: 10px;">Access Trade Journal</a>
+                        </div>
+                    </section>
+                `;
+            } else if (pageId === 'research') {
+                pageContent.innerHTML = `
+                    <section id="research" class="container">
+                        <h2 class="page-title">Macro Research & Insights</h2>
+                        <div class="content-grid">
+                            <div class="card">
+                                <h3>The Future of Decentralized Finance (DeFi)</h3>
+                                <div class="meta">
+                                    <span><i class="fas fa-calendar-alt"></i> May 20, 2025</span>
+                                    <span><i class="fas fa-tags"></i> DeFi, Blockchain, Fintech</span>
+                                </div>
+                                <p>An extensive report on the growth trajectory of DeFi, regulatory landscapes, and key innovations shaping its future. Includes risk assessment and potential impact on traditional finance.</p>
+                                <div class="chart-placeholder">DeFi Market Cap Growth (Placeholder)</div>
+                                <a href="#" class="read-more">Read Full Report <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="card">
+                                <h3>Impact of Global Supply Chain Restructuring</h3>
+                                <div class="meta">
+                                    <span><i class="fas fa-calendar-alt"></i> May 15, 2025</span>
+                                    <span><i class="fas fa-tags"></i> Geopolitics, Trade, Economics</span>
+                                </div>
+                                <p>Analysis of ongoing shifts in global supply chains, driven by geopolitical factors and technological advancements. Identifying sectors and regions poised to benefit or face challenges.</p>
+                                <div class="chart-placeholder">Regional Manufacturing Output Trends (Placeholder)</div>
+                                <a href="#" class="read-more">Read Full Report <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="card">
+                                <h3>Renewable Energy Transition: Investment Hotspots</h3>
+                                <div class="meta">
+                                    <span><i class="fas fa-calendar-alt"></i> May 10, 2025</span>
+                                    <span><i class="fas fa-tags"></i> Energy, Sustainability, ESG</span>
+                                </div>
+                                <p>Identifying key investment opportunities within the renewable energy sector, focusing on technological breakthroughs, policy support, and market demand.</p>
+                                <div class="chart-placeholder">Renewable Energy Investment Growth by Source (Placeholder)</div>
+                                <a href="#" class="read-more">Read Full Report <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            }
+        }
+
+        // Load initial page (Updates)
+        showPage('updates');
+
+        // Handle back/forward navigation
+        window.onpopstate = function(event) {
+            const pageId = location.hash.substring(1) || 'updates';
+            showPage(pageId);
+        };
+        
+        // Set initial state for history
+        if (!location.hash) {
+            history.replaceState({page: 'updates'}, 'Updates', '#updates');
+        } else {
+            showPage(location.hash.substring(1));
+        }
+
+    </script>
+</body>
+</html>
